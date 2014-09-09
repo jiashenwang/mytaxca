@@ -1,0 +1,165 @@
+/* -------------------------------Fonts------------------------------- */
+@font-face {
+  font-family: raleyway;
+  src: url(../fonts/raleway_reg.otf);
+}
+
+/* -------------------------------End of Fonts------------------------------- */
+
+
+/* -------------------------------Login------------------------------- */
+body {
+  color: white;
+  font-family: 'raleyway';
+  margin: 0;
+  background:#2F373D;
+}
+
+.login_container{
+  background: url(/assets/images/tex_background.jpg) no-repeat center center fixed; 
+  background-size: cover;
+}
+
+#title{
+  padding-left: 50px;
+}
+
+
+input:focus{
+  background-color:yellow;
+}
+
+.login_form_box {
+
+  background: #26292E;
+  padding-top: 5px;
+  width: 390px;
+  max-height:500px;
+  min-height: 280px;
+  border-radius:5px;
+  padding-bottom: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; 
+
+}
+.login_tab_links {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+  border-radius:5px 5px 0 0;
+
+}
+
+
+.login_tab_links li {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+.login_tab_links a {
+  display: block;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  padding: 8px 22px 12px 5px;
+  border-radius:5px 0 0 0;
+}
+
+.login_tab_links a:hover {
+
+  text-decoration: none;
+  color: #00FF00;
+
+
+}
+
+.form-action {
+  padding: 0 20px;
+  position: relative;
+}
+
+
+
+form input[type=text],
+form input[type=password] {
+  width: 95%;
+  height: 40px;
+  margin-bottom: 30px;
+  padding-left: 15px;
+  background: #fff;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+
+.form-action .dark-box.bottom {
+  position: absolute;
+  right: 0;
+  bottom: -24px;
+}
+.login_tab_links + .dark-box.top {
+  position: absolute;
+  right: 0;
+  top: 0px;
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}
+
+.login_button,#btn_logout,.common_button,#create,#memecreatesavebtn,#url,#memecreateagainbtn,#saveedits {
+    border: none;
+    display: block;
+    background: #136899;
+    height: 40px;
+    width: 100px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+    -webkit-transition: all 0.15s linear;
+    -moz-transition: all 0.15s linear;
+    transition: all 0.15s linear;
+    float:right;
+    outline:0;
+
+}
+
+.login_button:hover,#btn_logout:hover,.common_button:hover,#create:hover,#memecreatesavebtn:hover,#url:hover,#memecreateagainbtn:hover,#saveedits:hover {
+  background: #1e75aa;
+  border: none;
+
+}
+
+#saveedits{
+  margin-right: 10px;
+}
+
+.login_header{
+  font-size: 30px;
+  font-weight: 100;
+  color:#fff;
+  margin-bottom: 20px;
+}
+
+.login_button:focus,  #btn_logout:focus, .common_button:focus, #create:focus, #memecreatesavebtn:focus, #url:focus, #memecreateagainbtn:focus, #saveedits:focus {
+
+    background: #136899;
+
+
+}
+
+.login_box_center{
+  width:300px;
+  height:450px;
+ margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+/* ----------------------------End of Login--------------------------- */

@@ -1,0 +1,22 @@
+*** REMEMBER! ALWAYS COLLAB MODE, ALWAYS! COLLAB MODE!
+
+1) Concept
+Receiving work orders from email / fax and phone, and assign people to work.
+
+2) Software Requirements
+Online web is good
+Can associate with yahoo calendar or Google calendar (as this point prefer Yahoo calender)
+
+3) Functions
+Boss able to assign work/job to different employees that including the boss himself.
+Software will put work in order (by due date or by date of ordered) and remind worker to finish it until the job finish.
+System is capable to notify the boss when is done for review.
+
+4) Work and Job information
+Client Name
+Company Name
+Client Address
+Client Email
+Client Telephone
+Job Description
+Special Note
