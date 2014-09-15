@@ -1,15 +1,28 @@
 <?php
-session_start();
- 
-if (isset($_SESSION['email'])) {
-	// Put stored session variables into local PHP variable
-	$email = $_SESSION['email'];
-	$name = $_SESSION['name'];
-  $level = $_SESSION['level'];
-  $action = $_SESSION['action'];
-} else {
-	header("Location: index.php");
-}
+   require ( '../secure/connector.php' );
+
+  session_start();
+
+  // Set session cookie to httponly, prevents javascript access to cookies
+  $current = session_get_cookie_params();
+  session_set_cookie_params(
+    $current['lifetime'],
+    $current['path'],
+    $current['domain'],
+    $current['secure'],
+    true
+  );
+
+  // Basic authentication. TODO: probably should add more
+  if( !isset($_SESSION['info']) ){
+    logout();
+  }else{
+    
+    // Sanitizes email & name before any form of printing 
+    $email = filter_var( $_SESSION['info']->getEmail(), FILTER_SANITIZE_EMAIL );
+    $name = filter_var( $_SESSION['info']->getName(), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+    $level = $_SESSION['info']->getLevel();
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,9 +79,10 @@ if (isset($_SESSION['email'])) {
     <div id="wrapper">
 
         <!-- Navigation -->
-   <?php
-      include 'nav_bar.php';
-  ?>
+    <?php
+      include ( $_SERVER['DOCUMENT_ROOT'] . '/includes/navbar.php' );
+      echo navbar( $_SESSION['info'] );
+    ?>
 
         <div id="page-wrapper">
 

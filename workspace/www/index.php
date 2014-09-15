@@ -30,7 +30,7 @@
         
         // Success, redirect
         .done(function() {
-          window.location = "dash.php";
+          window.location = "dashboard.php";
         })
 
         // Failed, check status code

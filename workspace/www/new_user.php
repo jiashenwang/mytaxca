@@ -1,3 +1,11 @@
+<?php
+
+  // Includes connector.php
+  // Includes SESSION validation
+  require ( '../secure/session.php' );
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,28 +28,32 @@
 
     <!-- Custom Fonts -->
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-f
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+  
+   <script src="./js/jquery-1.11.0.js"></script>
+  <script src="./js/utils.js" type="text/javascript"></script>
+  <script src="./js/register_user.js" type="text/javascript"></script>
+  <script src="./js/addUser.js" type="text/javascript"></script>
+
 
 </head>
 
 <body>
-
+  
+    <?php
+      include ( $_SERVER['DOCUMENT_ROOT'] . '/includes/navbar.php' );
+      echo navbar( $_SESSION['info'] );
+    ?>
+  
     <div id="wrapper">
-
-        <!-- Navigation -->
-  <?php
-      include 'nav_bar.php';
-  ?>
-
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
+      <div id="page-wrapper">
+        <div class="container-fluid">
 
                 <!-- Page Heading -->
                 <div class="row">
@@ -59,14 +71,12 @@ f
                         </ol>
                     </div>
                 </div>
-               <?php if($repeat == true) { ?>
-                <h5 style="background-color:red;">Email or name has already been used</h5>
-               <?php } ?>
+              
                 <!-- /.row -->
-                <form role="form" method="post" action="new_user.php">
+                <form role="form" method="post" action="../action/addUser.php">
                   <div class="form-group">
-                    <label for="new_email">New User's Email</label>
-                    <input required name="new_email" type="email" class="form-control" id="new_email" placeholder="Enter Employee's Email">
+                    <label for="new_email">New User's Email</label><span id="email_ok"></span>
+                    <input required name="new_email" type="email" id="new_email" placeholder="Enter Employee's Email" onchange="checkUserEmail()"> 
                   </div>
                   <div class="form-group">
                     <label for="new_name">New User's Name</label>
@@ -86,11 +96,10 @@ f
                       <option value="1">1 (Low)</option>
                     </select>
                 </div>
-
-
-                  <button type="submit" class="btn btn-default">Submit</button>
-                </form>
-
+                  <button type="submit" class="btn btn-default" id="register">Submit</button>
+                  <span id="submit_result"></span>
+          </form> 
+               
             </div>
             <!-- /.container-fluid -->
 

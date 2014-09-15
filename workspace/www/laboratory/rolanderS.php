@@ -92,7 +92,7 @@
         <form onsubmit="birth(event)" role="form">
           <input type="email" name="email" placeholder="Email" autofocus required>
           <input type="text" name="name" placeholder="Username" required>
-          <input pattern=".{6,}" type="password" title="Size 6+"  name="password" placeholder="Password" required>
+          <input type="password" name="password" placeholder="Password" required>
           <input type="text" name="secret" placeholder="Secret phrase" required>
           <input type="submit" value="Rolando Please!">
         </form>
