@@ -1,7 +1,7 @@
 <?php
-
+  // Includes connector.php
+  // Includes SESSION validation
   require ( '../secure/session.php' );
-
 ?>
 
 <!DOCTYPE html>
@@ -16,9 +16,7 @@
 
     <title>My TaxCA - New Task</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/sb-admin.css" rel="stylesheet">
-    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,6 +37,7 @@
       var client_name;
       var count=0;
       var name_list;
+
       
           // get users
           $.ajax({
@@ -94,7 +93,7 @@
         // Success, redirect
         .done(function(data) {      
           
-          client_id = data;
+          client_id = JSON.parse(data);
           client_name = entered_client_name;
           clientChoosed=true;
           
@@ -102,8 +101,10 @@
           document.getElementById("client_company").value = entered_client_company;
           document.getElementById("client_phone").value = entered_client_phone;
           document.getElementById("client_address").value = entered_client_address;
-                 
-          alert("New Client Added!");
+      
+          
+         alert("New Client Added!");
+        
           //window.location = "thanks.php";
         })
 
@@ -171,15 +172,31 @@
                 newButton.name=result[i]['client_name']
                 
                 newButton.onclick = function () {
+                 
+                  
                   document.getElementById("search_client").value = this.name;
+                  
+                 //var elem = document.getElementById('notice');
+                  elem_err.style.visibility = 'hidden';
+                  elem.style.visibility = 'visible';
+                  elem.innerHTML = this.value + " is choosen!";             
+                  
                   clientChoosed = true;
                   client_id = this.client_id;
                   client_name = this.name;                 
-                  alert(this.value + " is choosen!");
+                  //alert(this.value + " is choosen!");
                     document.getElementById("client_name").value = this.name;
                     document.getElementById("client_company").value = this.company;
                     document.getElementById("client_phone").value = this.phone;
                     document.getElementById("client_address").value = this.address;
+                  
+                  for(i=0; i<count; i++){
+                      var child = document.getElementById('guess_clients');
+                      if(child){
+                          child.parentNode.removeChild(child); 
+                       }     
+                  }
+                  count=0;
                 };
                 buttonContainer.appendChild(newButton);
               
@@ -238,68 +255,28 @@
 
             // Success, shoot stuff
             .done(function( response ) {
-              alert( "OK " + response );
+                  elem_err.style.visibility = 'hidden';
+                  elem.style.visibility = 'visible';
+                  elem.innerHTML = "Task Added Successfully!";
+              alert("Task Added Successfully!");
             })
 
             // Failed, also shoot stuff
             .fail(function(xhr) {
-              alert( "ERROR " + xhr );
+              console.log(formData);
+                  elem_err.style.visibility = 'visible';
+                  elem.style.visibility = 'hidden';
+                  elem_err.innerHTML = "create a task failed! bad request!";
             });            
           }else{
-            alert("create a task failed! You must choose a client or create one!");
+            //alert("create a task failed! You must choose a client or create one!");
+                  elem_err.style.visibility = 'visible';
+                  elem.style.visibility = 'hidden';
+                  elem_err.innerHTML = "create a task failed! You must choose a client or create one!";               
           }
           event.preventDefault();
         }
       
-        /*
-        function task_create(event){
-          
-          var temp;          
-          for(i=0; i<name_list.length; i++){
-                        
-              if(name_list[i].user_id == $('#assign_to option:selected').val()){
-                temp = name_list[i].user_name;
-                break;
-              }
-          }
-          
-          if(clientChoosed && client_id && client_name){
-              var formData = {
-                'NTclientid' : client_id,
-                'NTclientname' : client_name,
-                'NTname' : $('input[name=task_name]').val(),
-                'NTdescription' : $('input[name=job_description]').val(),
-                'NTuserid' : $('#assign_to option:selected').val(),
-                'NTusername' : temp,
-                'NTdeadline' : $('input[name=deadline]').val(),
-                'NTcomment' : $('textarea[name=memo]').val()
-              };              
-
-            // Create Ajax request object
-            $.ajax({
-              url: "/action/task.php",
-              type: "POST", 
-              data: formData, 
-              dataType: "html"
-            })
-
-            // Success, shoot stuff
-            .done(function( response ) {
-              alert("task added!");
-            })
-
-            // Failed, also shoot stuff
-            .fail(function(xhr, status, error) {
-              alert("task creation filed!");
-              console.log(xhr);
-            });            
-          }else{
-            alert("create a task field! You must choose a client or create one!");
-          }
-          event.preventDefault();
-        }
-        */
-        
     </script>
   </head>
 
@@ -307,11 +284,13 @@
 
     <?php
       include ( $_SERVER['DOCUMENT_ROOT'] . '/includes/navbar.php' );
-      echo navbar( $_SESSION['info'], NEW_TASK );
+      echo navbar( NEW_TASK );
     ?>  
   
     <div id="wrapper">
       <div id="page-wrapper">
+        <div id="notice" class="alert alert-success" role="alert"></div>
+        <div id="notice_err" class="alert alert-danger" role="alert"></div>
         <div class="container-fluid">
 
           <!-- Page Heading -->
@@ -322,10 +301,10 @@
               </h1>
               <ol class="breadcrumb">
                 <li>
-                  <i class="fa fa-dashboard"></i>  <a href="dashboard.php">Dashboard</a>
+                  <span class="glyphicon glyphicon-dashboard"></span>  <a href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="active">
-                  <i class="fa fa-table"></i> New Task
+                  <span class="glyphicon glyphicon-record"></span> New Task
                 </li>
               </ol>
             </div>
@@ -350,10 +329,6 @@
   </div>
 </div> 
                 
-            <button class="btn btn-primary btn-lg col-lg-3" data-toggle="modal" data-target="#myModal">
-              New Client
-            </button>
-          <br><br><br><hr>
           
           
               <!-- ROLANDO'S -->
@@ -391,7 +366,7 @@
               </div>
               <!-- END OF ROLANDO's -->
           
-          <h4> Choosen Client info: </h4>
+          <h4> Chosen Client info: </h4>
           
               <!-- ================================ -->
 <!-- Button trigger modal -->
@@ -401,7 +376,7 @@
                       <div class="col-lg-6">
                         <div class="input-group">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Client Name</button>
+                            <button disabled class="btn btn-default" type="button">Client Name</button>
                           </span>
                           <input id='client_name' readonly type="text" class="form-control">
                         </div><!-- /input-group -->
@@ -410,7 +385,7 @@
                       <div class="col-lg-6">
                         <div class="input-group">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Company Name</button>
+                            <button disabled class="btn btn-default" type="button">Company Name</button>
                           </span>
                           <input id='client_company' readonly type="text" class="form-control">
                         </div><!-- /input-group -->
@@ -419,7 +394,7 @@
                       <div class="col-lg-6">
                         <div class="input-group">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Client's Phone</button>
+                            <button disabled class="btn btn-default" type="button">Client's Phone</button>
                           </span>
                           <input id='client_phone' readonly type="text" class="form-control">
                         </div><!-- /input-group -->
@@ -428,7 +403,7 @@
                       <div class="col-lg-6">
                         <div class="input-group">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Client's Address</button>
+                            <button disabled class="btn btn-default" type="button">Client's Address</button>
                           </span>
                           <input id='client_address' readonly type="text" class="form-control">
                         </div><!-- /input-group -->
@@ -440,20 +415,26 @@
 <br><br><br><hr>            
             <div class="form-group">
               
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <button disabled class="btn btn-default" type="button">Client's name</button>
-                 </span>
-                 <input id='search_client' type="text" class="form-control" onkeyup="showResult(this.value)">
-                 <div  id="livesearch"></div>
-                </div><!-- /input-group --><br>             
-             </div>
               
+               
+                <button class="btn btn-primary col-lg-4 col-md-4 col-sm-4 col-xs-4" data-toggle="modal" data-target="#myModal" id="new_client_bt">
+                  New Client
+                </button>  
+                <h3 class="col-lg-1 col-md-1 col-sm-1 col-xs-1">OR</h3>
+                <div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4" style="float:left;">
+                  <span class="input-group-btn">
+                    <button disabled class="btn btn-default" type="button">Enter An Existent Client's Name</button>
+                  </span>
+                  <input id='search_client' type="text" class="form-control" onkeyup="showResult(this.value)">
+                  <div id="livesearch"></div>
+                </div><!-- /input-group --><br>               
+             </div>
+              <br><br><br>
               
           <form role="form" method="post" onsubmit="task_create(event)">              
               
              <div class="form-group">
-              <label for="task_name">Task Name <span class="red-star">★</span></label> 
+              <label for="task_name">Task Name&nbsp;</label><span style="color:red" class="glyphicon glyphicon-star"></span>
               <input required name="task_name" type="text" class="form-control" id="task_name" placeholder="Enter Task Name">
             </div> 
 
@@ -463,7 +444,7 @@
             </div>                   
 
             <div class="form-group" <?php if($level != 3) { ?> hidden <?php } ?> >
-              <label for="assign_to">Assign to <span class="red-star">★</span></label>   
+              <label for="assign_to">Assign to&nbsp;</label><span style="color:red" class="glyphicon glyphicon-star"></span>   
               <select name="assign_to" class="form-control" id="assign_to" placeholder="person who will be responsible for the task">
 
                 
@@ -471,7 +452,7 @@
             </div>
 
             <div class="form-group">
-              <label for="deadline">Deadline<span class="red-star">★</span></label>
+              <label for="deadline">Deadline&nbsp;</label><span style="color:red" class="glyphicon glyphicon-star"></span>
               <input required name="deadline" type="date" class="form-control" id="deadline" >
             </div>
 
@@ -483,11 +464,16 @@
             <button type="submit" class="btn btn-default">Submit</button>
           </form>
 
-
         </div>
       </div>
     </div>
 
   </body>
+  <script>
+      var elem = document.getElementById('notice');
+      var elem_err = document.getElementById('notice_err');
+      elem.style.visibility = 'hidden';
+      elem_err.style.visibility = 'hidden';
+  </script>
 
 </html>

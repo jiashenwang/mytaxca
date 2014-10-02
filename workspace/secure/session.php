@@ -16,24 +16,32 @@
     true
   );
 
+  // USE FOR HTML/CSS VALIDATION
+  /*
+  $email = "debug.mail";
+  $name = "debug.mode";
+  $id = "U541c004d7cec1"; // Validator's id
+  $level = OWNER;
+  */
+
+  ///*
   // Basic authentication. TODO: probably should add more
   if( !isset($_SESSION['info']) ){
     logout();
   }else{
     
-    // Sanitizes email & name before any form of printing 
+    // Sanitizes all inputs
     $email = filter_var( $_SESSION['info']->getEmail(), FILTER_SANITIZE_EMAIL );
     $name = filter_var( $_SESSION['info']->getName(), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+    $id = filter_var( $_SESSION['info']->getId(), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
     
-    // level not sanitized as it's set by the system. TODO: sanitize if there's any change
-    $level = $_SESSION['info']->getLevel();
+    $level = filter_var( $_SESSION['info']->getLevel(), FILTER_SANITIZE_NUMBER_INT );
     
-    // No sanitation, id is made server side
-    $id = $_SESSION['info']->getId();
   }
+  //*/
 
   function logout(){
-    header( "Location: action/logout.php" );
+    header( "Location: /action/logout.php" );
   }
 
 ?>

@@ -257,7 +257,8 @@ ul.alert-dropdown {
 
 #new_name {width:30%;height:24px;}
 #initial_pass{width:30%;height:24px;}
-
+#old_pass{width:30%; height:24px;}
+#confirm_pass{width:30%; height:24px;}
 #guess_clients{}
 
 

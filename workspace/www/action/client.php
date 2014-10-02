@@ -18,6 +18,7 @@
       $phone = $_POST['entered_new_client_phone'];
     
       action( $name, $type, $company, $address, $email, $phone );
+
     }   
   }
   
@@ -34,14 +35,13 @@
                    
           header('HTTP/1.1 200 OK');
           echo json_encode($Client_ID);
+          
           exit;
         }
       }
       header('HTTP/1.1 403 Forbidden');
     failure();
   }
-
-
 
   // Validation failure
   function failure(){

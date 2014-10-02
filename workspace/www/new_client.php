@@ -1,28 +1,7 @@
 <?php
-   require ( '../secure/connector.php' );
-
-  session_start();
-
-  // Set session cookie to httponly, prevents javascript access to cookies
-  $current = session_get_cookie_params();
-  session_set_cookie_params(
-    $current['lifetime'],
-    $current['path'],
-    $current['domain'],
-    $current['secure'],
-    true
-  );
-
-  // Basic authentication. TODO: probably should add more
-  if( !isset($_SESSION['info']) ){
-    logout();
-  }else{
-    
-    // Sanitizes email & name before any form of printing 
-    $email = filter_var( $_SESSION['info']->getEmail(), FILTER_SANITIZE_EMAIL );
-    $name = filter_var( $_SESSION['info']->getName(), FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-    $level = $_SESSION['info']->getLevel();
-  }
+  // Includes connector.php
+  // Includes SESSION validation
+  require ( '../secure/session.php' );
 ?>
 
 <!DOCTYPE html>
@@ -38,14 +17,7 @@
 
     <title>My TaxCA - New Client</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
   
     <script src="/js/jquery-1.11.0.js"></script>
     <script src="/js/bootstrap.min.js"></script>
@@ -97,7 +69,7 @@
         <!-- Navigation -->
     <?php
       include ( $_SERVER['DOCUMENT_ROOT'] . '/includes/navbar.php' );
-      echo navbar( $_SESSION['info'] );
+      echo navbar();
     ?>
 
         <div id="page-wrapper">
@@ -112,7 +84,7 @@
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="dash.php">Dashboard</a>
+                                <span class="glyphicon glyphicon-dashboard"></span>  <a href="/dashboard.php">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-table"></i> New Client Profile

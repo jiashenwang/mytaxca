@@ -14,14 +14,15 @@
         foreach($users as $user) {
           $array[] = array('user_id'=>$user->getId(),
                             'user_email'=>$user->getEmail(),
-                            'user_name'=>$user->getName());            
+                            'user_name'=>$user->getName()
+                          );            
         }
          if(isset($array)){
-            print_r (json_encode($array));
+            echo json_encode($array);
          }else{
            echo('Nothing to display.');
          }   
-        header('HTTP/1.1 200 OK');
+        //header('HTTP/1.1 200 OK');
         exit;
       }else{
           header('HTTP/1.1 403 Forbidden');

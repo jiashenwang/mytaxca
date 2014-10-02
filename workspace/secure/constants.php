@@ -7,9 +7,10 @@
   define("DB_PW", '123456');
 
   // Search types
-  define("SEARCH_TASK", 1);
-  define("SEARCH_CLIENT", 2);
-  define("SEARCH_DEADLINE", 3);
+  define("SEARCH_TASK_NAME", 1);
+  define("SEARCH_CLIENT_NAME", 2);
+  define("SEARCH_COMPANY_NAME", 3);
+  define("SEARCH_EMPLOYEE_NAME", 4);
 
   // Admin constants
   define("OWNER", 3);
@@ -19,9 +20,15 @@
   define("SEARCH", 2);
   define("NEW_TASK", 3);
 
-  // Task types
+  // Task types + task array constants
+  define('TOTAL', -1);
   define('NOT_STARTED', 0);
   define('IN_PROGRESS', 1);
   define('DONE', 2);
+  
+
+  // Task array divisor
+  define('ALL', 'all');
+  define('STATUS', 'status');
 
 ?>

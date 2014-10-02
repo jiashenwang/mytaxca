@@ -15,7 +15,12 @@
             echo '<div style="color:red">*That email is already used</div>';
         }
         else{
-            echo '<div style="color:green">Good to use !!</div>';
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo '<div style="color:green">Good to use !!</div>';
+            }
+            else {echo '<div style="color:red">Not a valid email address</div>';}
         }
+        
+        mysqli_close($con);
   }
 ?>

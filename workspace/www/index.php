@@ -15,6 +15,7 @@
     <script>
       
       function login(event){
+                
         var formData = {
           'IDXemail' : $('input[name=email]').val(),
           'IDXpassword' : $('input[name=password]').val()
@@ -56,7 +57,7 @@
       }
     </script>
     
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
           
   </head>
 

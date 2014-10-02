@@ -1,13 +1,14 @@
 <?php
 
   // Paints navbar
-  // $Myself - User object from $_SESSION['info']
   // $page   - URI page calling navbar (ie: dash.php, etc) 
-  function navbar( $Myself, $page = NULL ){
+  function navbar( $page = NULL ){
+    global $level;
+    global $name;
     
     // <li> add employee
     $add_employee_li = NULL;
-    if( $Myself->getLevel() == OWNER ){
+    if( $level == OWNER ){
       $add_employee_li = <<< HTML
         <li><a href="/new_user.php"> Add New Employee</a></li>                       
 HTML;
@@ -37,10 +38,10 @@ HTML;
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {$Myself->getName()} <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#"> Edit Account</a></li>
-              <li><a href="/action/logout.php"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>                      
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> $name <b class="caret"></b></a>
+            <ul class="dropdown-menu">    
+              <li><a href="/editAcc.php"> Edit Account</a></li>
+              <li><a href="/action/logout.php"><span class="glyphicon glyphicon-off"></span> Log Out</a></li>                      
             </ul>
           </li>
         </ul>
@@ -70,16 +71,16 @@ HTML;
         break;
       case NEW_TASK:
         $new_task = $class;
-        break;
+        break;     
     }
     
     // Paints sidebar, uses PHP Heredocs
     $body = <<< HTML
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
-          <li $dashboard ><a href="/dashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
-          <li $search ><a href="/search.php"><i class="fa fa-fw fa-bar-chart-o"></i> Search</a></li>
-          <li $new_task ><a href="/new_task.php"><i class="fa fa-fw fa-table"></i> New Task</a></li>
+          <li $dashboard ><a href="/dashboard.php"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+          <li $search ><a href="/search.php"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+          <li $new_task ><a href="/new_task.php"><span class="glyphicon glyphicon-record"></span> New Task</a></li>
         </ul>
       </div>
 HTML;
